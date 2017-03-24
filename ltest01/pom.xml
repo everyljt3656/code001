@@ -1,0 +1,259 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.every.test</groupId>
+  <artifactId>ltest01</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>ltest01</name>
+  
+   <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<!-- 解决测试乱码 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
+					<!-- 控制台中文乱码解决 -->
+					<argLine>Dfile-encoding=UTF-8</argLine>
+					<!-- 永远跳过测试 -->
+					<skip>false</skip>
+					<!-- 某个测试失败了，是否继续执行下一个测试 -->
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<!-- 配置端口号 -->
+				<configuration>
+					<port>8003</port>
+					<!-- 字符编码 -->
+					<charset>UTF-8</charset>
+					<!-- 能解决get请求的乱码 -->
+					<uriEncoding>UTF-8</uriEncoding>
+				</configuration>
+			</plugin>
+
+			<!-- tomcat7插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<!-- 自定义属性 -->
+	<properties>
+		<!-- 统一版本维护及管理 -->
+		<spring.version>3.2.12.RELEASE</spring.version>
+		<!-- 对freemarker支持 -->
+		<spring-freemarker.version>2.3.18</spring-freemarker.version>
+		<!-- 持久层框架 -->
+		<mybatis.version>3.4.1</mybatis.version>
+		<!-- 日志 -->
+		<slf4j.version>1.7.5</slf4j.version>
+		<!-- 数据库 -->
+		<!-- <oracle.version>10.2.0.4.0</oracle.version> -->
+		<mysql.version>5.1.6</mysql.version>
+		<!-- 连接池 -->
+		<!-- <c3p0.version>0.9.1.2</c3p0.version> -->
+		<alibaba.druid>1.0.28</alibaba.druid>
+		<!-- servlet,jsp -->
+		<servlet.version>2.5</servlet.version>
+		<jsp.version>2.0</jsp.version>
+		<jstl.version>1.2</jstl.version>
+		<!-- json支持@requestBody@responseBody -->
+		<jackson.version>1.9.13</jackson.version>
+		<!-- <ehcache.version>2.6.6</ehcache.version> -->
+		<!-- <mybatis-ehcache.version>1.0.0</mybatis-ehcache.version> -->
+		<!-- 注意:整合时要用1.3.1版本,因为mybatis3.4.1以上要对应 -->
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<!-- junit测试 -->
+		<junit.version>4.11</junit.version>
+		<!-- 文件上传 -->
+		<commons-io.version>2.4</commons-io.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
+		<!-- jersey服务器(上传) -->
+		<jersey.version>1.3</jersey.version>
+		<!-- oscache缓存 -->
+		<oscache.version>2.4.1</oscache.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<!-- 构件（艺术品，项目）类型 ,默认就是jar，一般不写 -->
+			<type>jar</type>
+			<!-- jar有效范围 -->
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 对freemarker支持 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 对freemarker支持 -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>com.springsource.freemarker</artifactId>
+			<version>${spring-freemarker.version}</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.data</groupId> <artifactId>spring-data-jpa</artifactId> 
+			<version>${spring.datajpa.version}</version> </dependency> -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<!-- 加入对json支持 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- mybatis_spring整合包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>3rd.com.oracle</groupId> <artifactId>ojdbc14</artifactId> 
+			<version>${oracle.version}</version> <scope>runtime</scope> </dependency> -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- <dependency> <groupId>net.sf.ehcache</groupId> <artifactId>ehcache-core</artifactId> 
+			<version>${ehcache.version}</version> </dependency> -->
+		<!-- <dependency> <groupId>org.mybatis</groupId> <artifactId>mybatis-ehcache</artifactId> 
+			<version>${mybatis-ehcache.version}</version> </dependency> -->
+		<!-- 	
+		<dependency> <groupId>c3p0</groupId> <artifactId>c3p0</artifactId> 
+			<version>${c3p0.version}</version> </dependency> -->
+		<!-- 阿里巴巴连接池 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${alibaba.druid}</version>
+		</dependency>
+		<!-- 上传 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
+		</dependency>
+		<!-- jersey跨平台服务器 -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+
+	</dependencies>
+	
+	
+</project>
